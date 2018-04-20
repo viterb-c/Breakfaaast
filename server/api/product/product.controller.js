@@ -6,12 +6,39 @@
  * PUT     /api/products/:id          ->  upsert
  * PATCH   /api/products/:id          ->  patch
  * DELETE  /api/products/:id          ->  destroy
+ * POST    /api/products/upload       ->  uploadImage
  */
 
 'use strict';
 
 import jsonpatch from 'fast-json-patch';
 import Product from './product.model';
+import multer from 'multer';
+
+let storage = multer.diskStorage({
+  destination: function(rq, file, callback) {
+    callback(null, 'public/images/product/');
+  },
+  filename: function(req, file, callback) {
+    callback(null, file.fieldname + '_' + Date.now() + '_' + file.originalname);
+  }
+});
+
+var upload = multer({ storage: storage }).single('image');
+
+export function uploadImage(req, res) {
+  upload(req, res, function(err, result) {
+    console.log('Salit');
+    console.log(err);
+    console.log(result);
+    if(err) {
+      return res.end('Errror uploading file :' + err);
+    }
+    var path = req.file.path;
+    console.log(path);
+    res.end('File is uploaded url : ' + path);
+  });
+}
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
