@@ -18,7 +18,10 @@ var BakerySchema = new mongoose.Schema({
   manager: {
     type: String,
     required: false
-  }/*,
+  },
+  products: [{
+    products_id: String
+  }]/*,
   email: {
     type: String,
     lowercase: true,
