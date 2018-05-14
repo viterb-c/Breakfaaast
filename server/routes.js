@@ -9,6 +9,7 @@
 
 export default function(app) {
   // Insert routes below
+  app.use('/api/basketss', require('./api/baskets'));
   app.use('/api/things', require('./api/thing'));
   app.use('/api/users', require('./api/user'));
 
