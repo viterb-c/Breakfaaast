@@ -16,9 +16,11 @@ var BakerySchema = new mongoose.Schema({
     required: true
   },
   manager: {
-    type: String,
-    required: false
-  }/*,
+      type: String,
+      required: false
+  },
+    products: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product'}]
+    /*,
   email: {
     type: String,
     lowercase: true,

@@ -86,6 +86,11 @@ export function create(req, res) {
     .catch(handleError(res));
 }
 
+// Create and add a new product to a bakery
+export function addProduct(req, res) {
+    Bakery.findById(req.params.id).exec();
+}
+
 // Upserts the given Bakery in the DB at the specified ID
 export function upsert(req, res) {
   if(req.body._id) {
