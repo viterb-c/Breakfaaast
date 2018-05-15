@@ -8,6 +8,7 @@ var DeliverymenSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  orders_id: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Orders'}],
   phone: {
     type: Number,
     validate: {
