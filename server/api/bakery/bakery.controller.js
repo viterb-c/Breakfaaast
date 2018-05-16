@@ -10,8 +10,10 @@
 
 'use strict';
 
+import mongoose from 'mongoose';
 import jsonpatch from 'fast-json-patch';
 import Bakery from './bakery.model';
+import Product from '../product/product.model'
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -60,6 +62,8 @@ function handleEntityNotFound(res) {
 function handleError(res, statusCode) {
   statusCode = statusCode || 500;
   return function(err) {
+    console.log('error find');
+    console.log(err);
     res.status(statusCode).send(err);
   };
 }
@@ -88,7 +92,79 @@ export function create(req, res) {
 
 // Create and add a new product to a bakery
 export function addProduct(req, res) {
-    Bakery.findById(req.params.id).exec();
+    if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return handleEntityNotFound(res, 'Bakery')(undefined);
+  }
+  return Bakery.findById(req.params.id).exec()
+      .then(bakery => {
+          req.body.description = req.body.description ? req.body.description : '';
+        let product = new Product({
+          name: req.body.name,
+          price: req.body.price
+        });
+          product.save()
+            .then(
+              bakery.products.push(product)
+            )
+            .catch(handleError(res));
+        return bakery.save()
+            .then(bakery => {
+                return Bakery.populate(bakery, 'products')
+                  .then(respondWithResult(res, 201))
+                  .catch(handleError(res));
+            })
+            .catch(handleError(res));
+      })
+        .catch(handleError(res));
+}
+
+// Add an existing product to a bakery
+export function  addExistingProduct(req, res) {
+    if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        return handleEntityNotFound(res, 'Bakery')(undefined);
+    }
+    return Bakery.findById(req.params.id).exec()
+        .then(bakery => {
+          Product.findById(req.body.product_id).exec()
+              .then(product => {
+                bakery.products.push(product);
+                return bakery.save()
+                    .then(bakery => {
+                      return Bakery.populate(bakery, 'products')
+                          .then(respondWithResult(res, 201))
+                          .catch(handleError(res));
+                    })
+                    .catch(handleError(res));
+              })
+              .catch(handleError(res));
+        })
+        .catch(handleError(res));
+}
+
+// Remove a product to a bakery
+export function  removeProduct(req, res) {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      return handleEntityNotFound(res, 'Bakery')(undefined);
+  }
+  return Bakery.findById(req.params.id).exec()
+      .then(bakery => {
+        let i = 0;
+        while (i < bakery.products.length && bakery.products[i].id != req.body.product_id) {
+          ++i;
+        }
+        if (i == bakery.products.length) {
+          return handleEntityNotFound(res, 'activity')(undefined);
+        }
+        bakery.products.splice(i, 1);
+        return bakery.save()
+            .then(bakery => {
+              return Bakery.populate(bakery, 'products')
+                  .then(respondWithResult(res, 201))
+                  .catch(handleError(res));
+            })
+            .catch(handleError(res));
+      })
+      .catch(handleError(res));
 }
 
 // Upserts the given Bakery in the DB at the specified ID

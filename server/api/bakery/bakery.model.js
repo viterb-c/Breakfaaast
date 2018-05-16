@@ -3,7 +3,7 @@
 import mongoose from 'mongoose';
 import {registerEvents} from './bakery.events';
 
-const authTypes = ['github', 'twitter', 'facebook', 'google'];
+//const authTypes = ['github', 'twitter', 'facebook', 'google'];
 
 
 var BakerySchema = new mongoose.Schema({
@@ -16,10 +16,10 @@ var BakerySchema = new mongoose.Schema({
     required: true
   },
   manager: {
-      type: String,
-      required: false
+    type: String,
+    required: false
   },
-    products: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product'}]
+  products: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product'}]
     /*,
   email: {
     type: String,

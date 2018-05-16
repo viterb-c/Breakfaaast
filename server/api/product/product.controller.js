@@ -17,7 +17,7 @@ import multer from 'multer';
 
 let storage = multer.diskStorage({
   destination: function(rq, file, callback) {
-    callback(null, 'public/images/product/');
+    callback(null, 'public/');
   },
   filename: function(req, file, callback) {
     callback(null, file.fieldname + '_' + Date.now() + '_' + file.originalname);
@@ -35,8 +35,10 @@ export function uploadImage(req, res) {
       return res.end('Errror uploading file :' + err);
     }
     var path = req.file.path;
+    var name = req.file.filename;
     console.log(path);
-    res.end('File is uploaded url : ' + path);
+    console.log(name);
+    res.end('File is uploaded url : '+ req.protocol + '://' + req.get('host') + '/' + name);
   });
 }
 
@@ -108,6 +110,14 @@ export function show(req, res) {
 
 // Creates a new Product in the DB
 export function create(req, res) {
+  console.log('TOTOTOT');
+  if(req.body.name == null) {
+    console.log('c null');
+  }
+  else {
+    console.log(req.body.name);
+  }
+  //console.log(req);
   return Product.create(req.body)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
