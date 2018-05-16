@@ -9,6 +9,7 @@
 
 export default function(app) {
   // Insert routes below
+  app.use('/api/basketss', require('./api/baskets'));
   app.use('/api/customerss', require('./api/customers'));
   app.use('/api/bakerys', require('./api/bakery'));
   app.use('/api/products', require('./api/product'));
