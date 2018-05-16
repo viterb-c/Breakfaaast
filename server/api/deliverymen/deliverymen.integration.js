@@ -35,8 +35,7 @@ describe('Deliverymen API:', function() {
       request(app)
         .post('/api/deliverymens')
         .send({
-          name: 'New Deliverymen',
-          info: 'This is the brand new deliverymen!!!'
+          name: 'New Deliverymen'
         })
         .expect(201)
         .expect('Content-Type', /json/)
@@ -51,7 +50,6 @@ describe('Deliverymen API:', function() {
 
     it('should respond with the newly created deliverymen', function() {
       expect(newDeliverymen.name).to.equal('New Deliverymen');
-      expect(newDeliverymen.info).to.equal('This is the brand new deliverymen!!!');
     });
   });
 
@@ -78,7 +76,6 @@ describe('Deliverymen API:', function() {
 
     it('should respond with the requested deliverymen', function() {
       expect(deliverymen.name).to.equal('New Deliverymen');
-      expect(deliverymen.info).to.equal('This is the brand new deliverymen!!!');
     });
   });
 
@@ -89,8 +86,7 @@ describe('Deliverymen API:', function() {
       request(app)
         .put(`/api/deliverymens/${newDeliverymen._id}`)
         .send({
-          name: 'Updated Deliverymen',
-          info: 'This is the updated deliverymen!!!'
+          name: 'Updated Deliverymen'
         })
         .expect(200)
         .expect('Content-Type', /json/)
@@ -109,7 +105,6 @@ describe('Deliverymen API:', function() {
 
     it('should respond with the updated deliverymen', function() {
       expect(updatedDeliverymen.name).to.equal('Updated Deliverymen');
-      expect(updatedDeliverymen.info).to.equal('This is the updated deliverymen!!!');
     });
 
     it('should respond with the updated deliverymen on a subsequent GET', function(done) {
@@ -124,7 +119,6 @@ describe('Deliverymen API:', function() {
           let deliverymen = res.body;
 
           expect(deliverymen.name).to.equal('Updated Deliverymen');
-          expect(deliverymen.info).to.equal('This is the updated deliverymen!!!');
 
           done();
         });
@@ -138,8 +132,7 @@ describe('Deliverymen API:', function() {
       request(app)
         .patch(`/api/deliverymens/${newDeliverymen._id}`)
         .send([
-          { op: 'replace', path: '/name', value: 'Patched Deliverymen' },
-          { op: 'replace', path: '/info', value: 'This is the patched deliverymen!!!' }
+          { op: 'replace', path: '/name', value: 'Patched Deliverymen' }
         ])
         .expect(200)
         .expect('Content-Type', /json/)
@@ -158,7 +151,6 @@ describe('Deliverymen API:', function() {
 
     it('should respond with the patched deliverymen', function() {
       expect(patchedDeliverymen.name).to.equal('Patched Deliverymen');
-      expect(patchedDeliverymen.info).to.equal('This is the patched deliverymen!!!');
     });
   });
 

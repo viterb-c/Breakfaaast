@@ -36,7 +36,7 @@ describe('Product API:', function() {
         .post('/api/products')
         .send({
           name: 'New Product',
-          info: 'This is the brand new product!!!'
+          price: 35
         })
         .expect(201)
         .expect('Content-Type', /json/)
@@ -51,7 +51,7 @@ describe('Product API:', function() {
 
     it('should respond with the newly created product', function() {
       expect(newProduct.name).to.equal('New Product');
-      expect(newProduct.info).to.equal('This is the brand new product!!!');
+      expect(newProduct.price).to.equal(35);
     });
   });
 
@@ -78,7 +78,7 @@ describe('Product API:', function() {
 
     it('should respond with the requested product', function() {
       expect(product.name).to.equal('New Product');
-      expect(product.info).to.equal('This is the brand new product!!!');
+      expect(product.price).to.equal(35);
     });
   });
 
@@ -90,7 +90,7 @@ describe('Product API:', function() {
         .put(`/api/products/${newProduct._id}`)
         .send({
           name: 'Updated Product',
-          info: 'This is the updated product!!!'
+          price: '35'
         })
         .expect(200)
         .expect('Content-Type', /json/)
@@ -109,7 +109,7 @@ describe('Product API:', function() {
 
     it('should respond with the updated product', function() {
       expect(updatedProduct.name).to.equal('Updated Product');
-      expect(updatedProduct.info).to.equal('This is the updated product!!!');
+      expect(updatedProduct.price).to.equal(35);
     });
 
     it('should respond with the updated product on a subsequent GET', function(done) {
@@ -124,7 +124,7 @@ describe('Product API:', function() {
           let product = res.body;
 
           expect(product.name).to.equal('Updated Product');
-          expect(product.info).to.equal('This is the updated product!!!');
+          expect(product.price).to.equal(35);
 
           done();
         });
@@ -139,7 +139,7 @@ describe('Product API:', function() {
         .patch(`/api/products/${newProduct._id}`)
         .send([
           { op: 'replace', path: '/name', value: 'Patched Product' },
-          { op: 'replace', path: '/info', value: 'This is the patched product!!!' }
+          { op: 'replace', path: '/price', value: 35 }
         ])
         .expect(200)
         .expect('Content-Type', /json/)
@@ -158,7 +158,7 @@ describe('Product API:', function() {
 
     it('should respond with the patched product', function() {
       expect(patchedProduct.name).to.equal('Patched Product');
-      expect(patchedProduct.info).to.equal('This is the patched product!!!');
+      expect(patchedProduct.price).to.equal(35);
     });
   });
 

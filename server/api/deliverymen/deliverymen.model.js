@@ -20,7 +20,6 @@ var DeliverymenSchema = new mongoose.Schema({
   },
   mail: {
     type: String,
-    required: true
   }
 });
 
