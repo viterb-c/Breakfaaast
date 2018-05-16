@@ -7,6 +7,7 @@ var router = express.Router();
 
 router.get('/', controller.index);
 router.get('/:id', controller.show);
+router.get('/:id/products', controller.getProductBakery);
 router.post('/', controller.create);
 router.post('/products/:id', controller.addProduct);
 router.put('/:id', controller.upsert);

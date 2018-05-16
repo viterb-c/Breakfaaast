@@ -36,7 +36,7 @@ describe('Bakery API:', function() {
         .post('/api/bakerys')
         .send({
           name: 'New Bakery',
-          info: 'This is the brand new bakery!!!'
+          address: 'Addresse de ma nouvelle bakery !!'
         })
         .expect(201)
         .expect('Content-Type', /json/)
@@ -51,7 +51,7 @@ describe('Bakery API:', function() {
 
     it('should respond with the newly created bakery', function() {
       expect(newBakery.name).to.equal('New Bakery');
-      expect(newBakery.info).to.equal('This is the brand new bakery!!!');
+      expect(newBakery.address).to.equal('Addresse de ma nouvelle bakery !!');
     });
   });
 

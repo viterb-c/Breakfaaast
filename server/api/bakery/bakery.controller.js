@@ -141,6 +141,22 @@ export function  addExistingProduct(req, res) {
         .catch(handleError(res));
 }
 
+// get bakery products
+export function getProductBakery(req, res) {
+    if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        return handleEntityNotFound(res, 'Bakery')(undefined);
+    }
+    return Bakery.findById(req.params.id)
+        .populate('products')
+        .exec()
+        .then(bakery => {
+            return respondWithResult(res, 201)(bakery.products);
+        })
+        .catch(handleError(res))
+}
+
+
+
 // Remove a product to a bakery
 export function  removeProduct(req, res) {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
