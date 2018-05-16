@@ -34,6 +34,8 @@ var UserSchema = new Schema({
       }
     }
   },
+  baskets_id: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Baskets'}],
+  orders_id: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Orders'}],
   provider: String,
   salt: String,
   facebook: {},
