@@ -36,7 +36,7 @@ describe('Customers API:', function() {
         .post('/api/customerss')
         .send({
           name: 'New Customers',
-          info: 'This is the brand new customers!!!'
+          address: 'This is my address'
         })
         .expect(201)
         .expect('Content-Type', /json/)
@@ -51,7 +51,7 @@ describe('Customers API:', function() {
 
     it('should respond with the newly created customers', function() {
       expect(newCustomers.name).to.equal('New Customers');
-      expect(newCustomers.info).to.equal('This is the brand new customers!!!');
+      expect(newCustomers.address).to.equal('This is my address');
     });
   });
 
@@ -78,7 +78,7 @@ describe('Customers API:', function() {
 
     it('should respond with the requested customers', function() {
       expect(customers.name).to.equal('New Customers');
-      expect(customers.info).to.equal('This is the brand new customers!!!');
+      expect(customers.address).to.equal('This is my address');
     });
   });
 
@@ -90,7 +90,7 @@ describe('Customers API:', function() {
         .put(`/api/customerss/${newCustomers._id}`)
         .send({
           name: 'Updated Customers',
-          info: 'This is the updated customers!!!'
+          address: 'This is my address'
         })
         .expect(200)
         .expect('Content-Type', /json/)
@@ -109,7 +109,7 @@ describe('Customers API:', function() {
 
     it('should respond with the updated customers', function() {
       expect(updatedCustomers.name).to.equal('Updated Customers');
-      expect(updatedCustomers.info).to.equal('This is the updated customers!!!');
+      expect(updatedCustomers.address).to.equal('This is my address');
     });
 
     it('should respond with the updated customers on a subsequent GET', function(done) {
@@ -124,7 +124,7 @@ describe('Customers API:', function() {
           let customers = res.body;
 
           expect(customers.name).to.equal('Updated Customers');
-          expect(customers.info).to.equal('This is the updated customers!!!');
+          expect(customers.address).to.equal('This is my address');
 
           done();
         });
@@ -139,7 +139,7 @@ describe('Customers API:', function() {
         .patch(`/api/customerss/${newCustomers._id}`)
         .send([
           { op: 'replace', path: '/name', value: 'Patched Customers' },
-          { op: 'replace', path: '/info', value: 'This is the patched customers!!!' }
+          { op: 'replace', path: '/address', value: 'This is my address' }
         ])
         .expect(200)
         .expect('Content-Type', /json/)
@@ -158,7 +158,7 @@ describe('Customers API:', function() {
 
     it('should respond with the patched customers', function() {
       expect(patchedCustomers.name).to.equal('Patched Customers');
-      expect(patchedCustomers.info).to.equal('This is the patched customers!!!');
+      expect(patchedCustomers.address).to.equal('This is my address');
     });
   });
 

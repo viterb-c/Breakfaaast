@@ -78,7 +78,7 @@ describe('Bakery API:', function() {
 
     it('should respond with the requested bakery', function() {
       expect(bakery.name).to.equal('New Bakery');
-      expect(bakery.info).to.equal('This is the brand new bakery!!!');
+      expect(bakery.address).to.equal('Addresse de ma nouvelle bakery !!');
     });
   });
 
@@ -90,7 +90,7 @@ describe('Bakery API:', function() {
         .put(`/api/bakerys/${newBakery._id}`)
         .send({
           name: 'Updated Bakery',
-          info: 'This is the updated bakery!!!'
+          address: 'Addresse de ma nouvelle bakery !!'
         })
         .expect(200)
         .expect('Content-Type', /json/)
@@ -109,7 +109,7 @@ describe('Bakery API:', function() {
 
     it('should respond with the updated bakery', function() {
       expect(updatedBakery.name).to.equal('Updated Bakery');
-      expect(updatedBakery.info).to.equal('This is the updated bakery!!!');
+      expect(updatedBakery.address).to.equal('Addresse de ma nouvelle bakery !!');
     });
 
     it('should respond with the updated bakery on a subsequent GET', function(done) {
@@ -124,7 +124,7 @@ describe('Bakery API:', function() {
           let bakery = res.body;
 
           expect(bakery.name).to.equal('Updated Bakery');
-          expect(bakery.info).to.equal('This is the updated bakery!!!');
+          expect(bakery.address).to.equal('Addresse de ma nouvelle bakery !!');
 
           done();
         });
@@ -139,7 +139,7 @@ describe('Bakery API:', function() {
         .patch(`/api/bakerys/${newBakery._id}`)
         .send([
           { op: 'replace', path: '/name', value: 'Patched Bakery' },
-          { op: 'replace', path: '/info', value: 'This is the patched bakery!!!' }
+          { op: 'replace', path: '/address', value: 'Addresse de ma nouvelle bakery !!' }
         ])
         .expect(200)
         .expect('Content-Type', /json/)
@@ -158,7 +158,7 @@ describe('Bakery API:', function() {
 
     it('should respond with the patched bakery', function() {
       expect(patchedBakery.name).to.equal('Patched Bakery');
-      expect(patchedBakery.info).to.equal('This is the patched bakery!!!');
+      expect(patchedBakery.address).to.equal('Addresse de ma nouvelle bakery !!');
     });
   });
 

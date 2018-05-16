@@ -20,7 +20,7 @@ var BakerySchema = new mongoose.Schema({
     required: false
   },
   products: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product'}],
-  orders_id: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Orders'}]
+  orders: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Orders'}]
     /*,
   email: {
     type: String,

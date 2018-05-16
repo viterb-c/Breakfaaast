@@ -10,12 +10,10 @@ var OrdersSchema = new mongoose.Schema({
   },
   products: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product'}],
   customer: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Customers',
-      required: true
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Customers',
+    required: true
   },
-
-
 });
 
 registerEvents(OrdersSchema);
