@@ -9,9 +9,9 @@
 
 export default function(app) {
   // Insert routes below
-  app.use('/api/orderss', require('./api/orders'));
-  app.use('/api/basketss', require('./api/baskets'));
-  app.use('/api/customerss', require('./api/customers'));
+  app.use('/api/orders', require('./api/orders'));
+  app.use('/api/baskets', require('./api/baskets'));
+  app.use('/api/customers', require('./api/customers'));
   app.use('/api/bakerys', require('./api/bakery'));
   app.use('/api/products', require('./api/product'));
   app.use('/api/deliverymens', require('./api/deliverymen'));

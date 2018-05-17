@@ -11,7 +11,7 @@ var OrdersSchema = new mongoose.Schema({
   products: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product'}],
   customer: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Customers',
+    ref: 'User',
     required: true
   },
 });

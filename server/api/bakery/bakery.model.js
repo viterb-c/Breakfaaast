@@ -21,28 +21,6 @@ var BakerySchema = new mongoose.Schema({
   },
   products: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product'}],
   orders: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Orders'}]
-    /*,
-  email: {
-    type: String,
-    lowercase: true,
-    required() {
-      if(authTypes.indexOf(this.provider) === -1) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-  }
-  password: {
-    type: String,
-    required() {
-      if(authTypes.indexOf(this.provider) === -1) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-  },*/
 });
 
 registerEvents(BakerySchema);
