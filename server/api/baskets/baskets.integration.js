@@ -8,12 +8,12 @@ import request from 'supertest';
 var newBaskets;
 
 describe('Baskets API:', function() {
-  describe('GET /api/basketss', function() {
+  describe('GET /api/baskets', function() {
     var basketss;
 
     beforeEach(function(done) {
       request(app)
-        .get('/api/basketss')
+        .get('/api/baskets')
         .expect(200)
         .expect('Content-Type', /json/)
         .end((err, res) => {
@@ -30,10 +30,10 @@ describe('Baskets API:', function() {
     });
   });
 
-  describe('POST /api/basketss', function() {
+  describe('POST /api/baskets', function() {
     beforeEach(function(done) {
       request(app)
-        .post('/api/basketss')
+        .post('/api/baskets')
         .send({
         //  name: 'New Baskets',
          // info: 'This is the brand new baskets!!!'
@@ -55,12 +55,12 @@ describe('Baskets API:', function() {
     });
   });
 
-  describe('GET /api/basketss/:id', function() {
+  describe('GET /api/baskets/:id', function() {
     var baskets;
 
     beforeEach(function(done) {
       request(app)
-        .get(`/api/basketss/${newBaskets._id}`)
+        .get(`/api/baskets/${newBaskets._id}`)
         .expect(200)
         .expect('Content-Type', /json/)
         .end((err, res) => {
@@ -82,12 +82,12 @@ describe('Baskets API:', function() {
     });
   });
 
-  describe('PUT /api/basketss/:id', function() {
+  describe('PUT /api/baskets/:id', function() {
     var updatedBaskets;
 
     beforeEach(function(done) {
       request(app)
-        .put(`/api/basketss/${newBaskets._id}`)
+        .put(`/api/baskets/${newBaskets._id}`)
         .send({
           //name: 'Updated Baskets',
           //info: 'This is the updated baskets!!!'
@@ -114,7 +114,7 @@ describe('Baskets API:', function() {
 
     it('should respond with the updated baskets on a subsequent GET', function(done) {
       request(app)
-        .get(`/api/basketss/${newBaskets._id}`)
+        .get(`/api/baskets/${newBaskets._id}`)
         .expect(200)
         .expect('Content-Type', /json/)
         .end((err, res) => {
@@ -131,12 +131,12 @@ describe('Baskets API:', function() {
     });
   });
 
-  describe('PATCH /api/basketss/:id', function() {
+  describe('PATCH /api/baskets/:id', function() {
     var patchedBaskets;
 
     beforeEach(function(done) {
       request(app)
-        .patch(`/api/basketss/${newBaskets._id}`)
+        .patch(`/api/baskets/${newBaskets._id}`)
         .send([
           //{ op: 'replace', path: '/name', value: 'Patched Baskets' },
           //{ op: 'replace', path: '/info', value: 'This is the patched baskets!!!' }
@@ -162,10 +162,10 @@ describe('Baskets API:', function() {
     });
   });
 
-  describe('DELETE /api/basketss/:id', function() {
+  describe('DELETE /api/baskets/:id', function() {
     it('should respond with 204 on successful removal', function(done) {
       request(app)
-        .delete(`/api/basketss/${newBaskets._id}`)
+        .delete(`/api/baskets/${newBaskets._id}`)
         .expect(204)
         .end(err => {
           if(err) {
@@ -177,7 +177,7 @@ describe('Baskets API:', function() {
 
     it('should respond with 404 when baskets does not exist', function(done) {
       request(app)
-        .delete(`/api/basketss/${newBaskets._id}`)
+        .delete(`/api/baskets/${newBaskets._id}`)
         .expect(404)
         .end(err => {
           if(err) {

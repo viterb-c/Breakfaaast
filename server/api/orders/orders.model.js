@@ -6,7 +6,7 @@ import {registerEvents} from './orders.events';
 var OrdersSchema = new mongoose.Schema({
   state: {
     type: String,
-    default: "Panier"
+    default: 'Panier'
   },
   products: [{
     type: mongoose.Schema.Types.ObjectId,

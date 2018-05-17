@@ -8,12 +8,12 @@ import request from 'supertest';
 var newCustomers;
 
 describe('Customers API:', function() {
-  describe('GET /api/customerss', function() {
+  describe('GET /api/customers', function() {
     var customerss;
 
     beforeEach(function(done) {
       request(app)
-        .get('/api/customerss')
+        .get('/api/customers')
         .expect(200)
         .expect('Content-Type', /json/)
         .end((err, res) => {
@@ -30,10 +30,10 @@ describe('Customers API:', function() {
     });
   });
 
-  describe('POST /api/customerss', function() {
+  describe('POST /api/customers', function() {
     beforeEach(function(done) {
       request(app)
-        .post('/api/customerss')
+        .post('/api/customers')
         .send({
           name: 'New Customers',
           address: 'This is my address'
@@ -55,12 +55,12 @@ describe('Customers API:', function() {
     });
   });
 
-  describe('GET /api/customerss/:id', function() {
+  describe('GET /api/customers/:id', function() {
     var customers;
 
     beforeEach(function(done) {
       request(app)
-        .get(`/api/customerss/${newCustomers._id}`)
+        .get(`/api/customers/${newCustomers._id}`)
         .expect(200)
         .expect('Content-Type', /json/)
         .end((err, res) => {
@@ -82,12 +82,12 @@ describe('Customers API:', function() {
     });
   });
 
-  describe('PUT /api/customerss/:id', function() {
+  describe('PUT /api/customers/:id', function() {
     var updatedCustomers;
 
     beforeEach(function(done) {
       request(app)
-        .put(`/api/customerss/${newCustomers._id}`)
+        .put(`/api/customers/${newCustomers._id}`)
         .send({
           name: 'Updated Customers',
           address: 'This is my address'
@@ -114,7 +114,7 @@ describe('Customers API:', function() {
 
     it('should respond with the updated customers on a subsequent GET', function(done) {
       request(app)
-        .get(`/api/customerss/${newCustomers._id}`)
+        .get(`/api/customers/${newCustomers._id}`)
         .expect(200)
         .expect('Content-Type', /json/)
         .end((err, res) => {
@@ -131,12 +131,12 @@ describe('Customers API:', function() {
     });
   });
 
-  describe('PATCH /api/customerss/:id', function() {
+  describe('PATCH /api/customers/:id', function() {
     var patchedCustomers;
 
     beforeEach(function(done) {
       request(app)
-        .patch(`/api/customerss/${newCustomers._id}`)
+        .patch(`/api/customers/${newCustomers._id}`)
         .send([
           { op: 'replace', path: '/name', value: 'Patched Customers' },
           { op: 'replace', path: '/address', value: 'This is my address' }
@@ -162,10 +162,10 @@ describe('Customers API:', function() {
     });
   });
 
-  describe('DELETE /api/customerss/:id', function() {
+  describe('DELETE /api/customers/:id', function() {
     it('should respond with 204 on successful removal', function(done) {
       request(app)
-        .delete(`/api/customerss/${newCustomers._id}`)
+        .delete(`/api/customers/${newCustomers._id}`)
         .expect(204)
         .end(err => {
           if(err) {
@@ -177,7 +177,7 @@ describe('Customers API:', function() {
 
     it('should respond with 404 when customers does not exist', function(done) {
       request(app)
-        .delete(`/api/customerss/${newCustomers._id}`)
+        .delete(`/api/customers/${newCustomers._id}`)
         .expect(404)
         .end(err => {
           if(err) {
