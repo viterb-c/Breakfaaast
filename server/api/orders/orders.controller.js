@@ -169,3 +169,28 @@ export function addProduct (req, res) {
         })
         .catch(handleError(res));
 }
+
+export function confirmOrder (req, res) {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        return handleEntityNotFound(res, 'Order')(undefined);
+    }
+    return Order.findById(req.params.id).exec()
+        .then(order => {
+            Deliverymen.findById(req.body.delivery_id).exec()
+                .then(delivery => {
+                    order.deliverymen = delivery;
+                    order.state = "On the road";
+                    return order.save()
+                        .then(order => {
+                            delivery.orders.push(order);
+                            return delivery.save()
+                                .then(respondWithResult(res, 201)(order))
+                                .catch(handleError(res));
+                        })
+                        .catch(handleError(res));
+                })
+                .catch(handleError(res));
+        })
+        .catch(handleError(res));
+
+}
