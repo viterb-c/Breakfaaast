@@ -121,7 +121,7 @@ describe('Orders API:', function() {
           if(err) {
             return done(err);
           }
-          let orders = res.body;
+          //let orders = res.body;
 
           //expect(orders.name).to.equal('Updated Orders');
           //expect(orders.info).to.equal('This is the updated orders!!!');
