@@ -11,5 +11,8 @@ router.post('/', controller.create);
 router.put('/:id', controller.upsert);
 router.patch('/:id', controller.patch);
 router.delete('/:id', controller.destroy);
+router.post('/user/:id', controller.createOrderForUser);
+router.post('/:id/product', controller.addProduct);
+//router.post('/:id/confirm', controller.confirmOrder);
 
 module.exports = router;

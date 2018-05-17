@@ -13,16 +13,13 @@ var OrdersSchema = new mongoose.Schema({
     ref: 'Product'
   }],
   customer: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User'
+    type: mongoose.Schema.Types.ObjectId
   },
   bakery: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Bakery'
+    type: mongoose.Schema.Types.ObjectId
   },
   deliverymen: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Deliverymen'
+    type: mongoose.Schema.Types.ObjectId
   }
 });
 

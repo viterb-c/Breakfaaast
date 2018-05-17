@@ -8,10 +8,16 @@
  * DELETE  /api/orderss/:id          ->  destroy
  */
 
+
 'use strict';
 
 import jsonpatch from 'fast-json-patch';
-import Orders from './orders.model';
+import Order from './orders.model';
+import User from '../user/user.model';
+import Deliverymen from '../deliverymen/deliverymen.model';
+import Bakery from '../bakery/bakery.model';
+import Product from '../product/product.model';
+import mongoose from 'mongoose';
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -66,14 +72,14 @@ function handleError(res, statusCode) {
 
 // Gets a list of Orderss
 export function index(req, res) {
-  return Orders.find().exec()
+  return Order.find().exec()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
 // Gets a single Orders from the DB
 export function show(req, res) {
-  return Orders.findById(req.params.id).exec()
+  return Order.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
     .catch(handleError(res));
@@ -81,7 +87,7 @@ export function show(req, res) {
 
 // Creates a new Orders in the DB
 export function create(req, res) {
-  return Orders.create(req.body)
+  return Order.create(req.body)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
 }
@@ -102,7 +108,7 @@ export function patch(req, res) {
   if(req.body._id) {
     Reflect.deleteProperty(req.body, '_id');
   }
-  return Orders.findById(req.params.id).exec()
+  return Order.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
     .then(patchUpdates(req.body))
     .then(respondWithResult(res))
@@ -111,8 +117,56 @@ export function patch(req, res) {
 
 // Deletes a Orders from the DB
 export function destroy(req, res) {
-  return Orders.findById(req.params.id).exec()
+  return Order.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
     .then(removeEntity(res))
     .catch(handleError(res));
+}
+
+export function createOrderForUser(req, res) {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        return handleEntityNotFound(res, 'User')(undefined);
+    }
+    return User.findById(req.params.id).exec()
+        .then(user => {
+            return Bakery.findById(req.body.bakery).exec()
+                .then(bakery_ => {
+                    let order = new Order({
+                        customer: user,
+                        bakery: bakery_
+                    });
+                    return order.save()
+                        .then(function () {
+                            bakery_.orders.push(order);
+                            return bakery_.save()
+                                .then(function () {
+                                    user.orders_id.push(order);
+                                    return user.save()
+                                        .then(respondWithResult(res, 201)(order))
+                                })
+                        })
+                })
+        })
+}
+
+export function addProduct (req, res) {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        return handleEntityNotFound(res, 'Order')(undefined);
+    }
+    return Order.findById(req.params.id).exec()
+        .then(order => {
+          Product.findById(req.body.product_id).exec()
+              .then(product => {
+                order.products.push(product);
+                return order.save()
+                    .then(order => {
+                      return Order.populate(order, 'products')
+                          .then(respondWithResult(res, 201))
+                          .catch(handleError(res));
+                    })
+                    .catch(handleError(res));
+              })
+              .catch(handleError(res));
+        })
+        .catch(handleError(res));
 }
