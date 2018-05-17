@@ -27,25 +27,22 @@ let storage = multer.diskStorage({
 let upload = multer({ storage: storage, fileFilter: fileFilterCreate }).single('image');
 
 function fileFilterCreate (req, file, cb) {
+    console.log("ICI");
     if (file == undefined) { return cb(null, true); }
-    if ([".jpg", ".jpeg", ".png"].indexOf(path.extname(file.originalname).toLowerCase()) === -1) {
-        return cb({ status: 400, message: 'You must upload a valid image' });
-    }
-    if (file.size > 2000000) {
-        return cb({status: 400, message: 'Max size: ' + app.get('max_file_size') + 'MB'});
-    }
     return cb(null, true);
 }
 
 export function uploadImage(req, res) {
-  upload(req, res, function(err, result) {
-    if(err) {
-      return res.end('Errror uploading file :' + err);
-    }
-    var path = req.file.path;
-    var name = req.file.filename;
-    res.end('File is uploaded url : '+ req.protocol + '://' + req.get('host') + '/' + name);
-  });
+    console.log("ICI");
+    return upload(req, res, (err) => {
+        if (err) {
+            return handleError(res)(err);
+        }
+        req.body.picture = req.get('host') + '/' + req.file.filename;
+        return Product.findOneAndUpdate({_id: req.params.id}, req.body, {new: true, upsert: true, setDefaultsOnInsert: true, runValidators: true}).exec()
+            .then(respondWithResult(res))
+            .catch(handleError(res));
+    });
 }
 
 function respondWithResult(res, statusCode) {

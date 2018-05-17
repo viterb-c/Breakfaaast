@@ -45,6 +45,19 @@ var all = {
     }
   },
 
+  geocoder: {
+      provider: 'google',
+      httpAdapter: 'https',
+      extra: {
+          apiKey: 'AIzaSyD2NS75eUA_3FQqTRn0HHYJXIS47iLqPws',
+          formatter: {
+              format: (data) => {
+                  return {latitude: data[0].latitude, longitude: data[0].longitude};
+              }
+          }
+      }
+  },
+
   facebook: {
     clientID: process.env.FACEBOOK_ID || 'id',
     clientSecret: process.env.FACEBOOK_SECRET || 'secret',

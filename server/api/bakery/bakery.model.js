@@ -9,11 +9,15 @@ import {registerEvents} from './bakery.events';
 var BakerySchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true
+    required: false
   },
   address: {
     type: String,
-    required: true
+    required: false
+  },
+  position: {
+    type: [Number],
+    index: '2dsphere'
   },
   manager: {
     type: String,
