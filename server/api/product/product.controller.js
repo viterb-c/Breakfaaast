@@ -24,20 +24,26 @@ let storage = multer.diskStorage({
   }
 });
 
-var upload = multer({ storage: storage }).single('image');
+let upload = multer({ storage: storage, fileFilter: fileFilterCreate }).single('image');
+
+function fileFilterCreate (req, file, cb) {
+    if (file == undefined) { return cb(null, true); }
+    if ([".jpg", ".jpeg", ".png"].indexOf(path.extname(file.originalname).toLowerCase()) === -1) {
+        return cb({ status: 400, message: 'You must upload a valid image' });
+    }
+    if (file.size > 2000000) {
+        return cb({status: 400, message: 'Max size: ' + app.get('max_file_size') + 'MB'});
+    }
+    return cb(null, true);
+}
 
 export function uploadImage(req, res) {
   upload(req, res, function(err, result) {
-    console.log('Salit');
-    console.log(err);
-    console.log(result);
     if(err) {
       return res.end('Errror uploading file :' + err);
     }
     var path = req.file.path;
     var name = req.file.filename;
-    console.log(path);
-    console.log(name);
     res.end('File is uploaded url : '+ req.protocol + '://' + req.get('host') + '/' + name);
   });
 }
