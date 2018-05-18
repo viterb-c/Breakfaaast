@@ -13,7 +13,6 @@ import methodOverride from 'method-override';
 import cookieParser from 'cookie-parser';
 import errorHandler from 'errorhandler';
 import path from 'path';
-import lusca from 'lusca';
 import config from './environment';
 import passport from 'passport';
 import session from 'express-session';
@@ -64,6 +63,7 @@ export default function(app) {
    * Lusca - express server security
    * https://github.com/krakenjs/lusca
    */
+  /*
   if(env !== 'test' && !process.env.SAUCE_USERNAME) {
     app.use(lusca({
       csrf: {
@@ -78,6 +78,7 @@ export default function(app) {
       xssProtection: true
     }));
   }
+  */
 
   if(env === 'development') {
     const webpackDevMiddleware = require('webpack-dev-middleware');

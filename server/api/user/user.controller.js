@@ -3,6 +3,7 @@
 import User from './user.model';
 import config from '../../config/environment';
 import jwt from 'jsonwebtoken';
+import Bakery from "../bakery/bakery.model";
 
 function validationError(res, statusCode) {
   statusCode = statusCode || 422;
